@@ -221,9 +221,9 @@ public class Assignment1 {
      * This methods displays the main menu of this program, providing the user
      * with 5 choices
      * <p>
-     * 1. Enter new books 2. Change the information of a book. 3. Display all
-     * books by a specific author. 4. Display all books under a certain price.
-     * 5. End the program
+     * 1. Enter new books <br>2. Change the information of a book. <br>3. Display all
+     * books by a specific author. <br>4. Display all books under a certain price.
+     * <br>5. End the program
      * </p>
      */
     public static void displayMenu() {
