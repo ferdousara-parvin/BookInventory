@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Assignment1 {
 
     // Create scanner
-    static Scanner kb = new Scanner(System.in);
+    static Scanner keyboard = new Scanner(System.in);
 
     // Final variable
     static final String PASSWORD = "password"; // the password cannot be changed (final)
@@ -41,7 +41,7 @@ public class Assignment1 {
 
         // Promt user to enter maximum number of books
         System.out.print("Please enter the maximum number of books: ");
-        final int MAX_BOOKS = kb.nextInt(); // Retrieve data and store it in final variable MAX_BOOKS
+        final int MAX_BOOKS = keyboard.nextInt(); // Retrieve data and store it in final variable MAX_BOOKS
         inventory = new Book[MAX_BOOKS]; // Set the size of array inventory
         int numberOfSpotsRemainingInArray = MAX_BOOKS; // Initialize the integer variable to MAX_BOOKS whic means that all spots are free at the beginning of the program 
 
@@ -78,12 +78,12 @@ public class Assignment1 {
                     if (hasPassedVerification) {
                         // Promt the user for the number of books user wants to enter
                         System.out.print("Please enter the number of books you would like to enter: ");
-                        numberOfBooksToEnter = kb.nextInt();
+                        numberOfBooksToEnter = keyboard.nextInt();
 
                         // Check if there is enough space in the array inventory
                         while ((numberOfSpotsRemainingInArray - numberOfBooksToEnter) < ZERO) {
                             System.out.print("You can add no more than " + numberOfSpotsRemainingInArray + " in your inventory of books. Please enter a new number: ");
-                            numberOfBooksToEnter = kb.nextInt();
+                            numberOfBooksToEnter = keyboard.nextInt();
                         }
 
                         numberOfSpotsRemainingInArray -= numberOfBooksToEnter;
@@ -93,16 +93,16 @@ public class Assignment1 {
                     //TODO (FERDOU): i cannot always start at 0. What if they try adding books another time and the entries 0 to 5 are occupied so you want to start adding books from where its going to end
                     for (int i = ZERO; i < numberOfBooksToEnter; i++) {
                         System.out.print("Please enter the title of the book: ");
-                        String title = kb.next();
+                        String title = keyboard.next();
 
                         System.out.print("Please enter the author of the book: ");
-                        String author = kb.next();
+                        String author = keyboard.next();
 
                         System.out.print("Please enter the ISBN of the book: ");
-                        long isbn = kb.nextLong();
+                        long isbn = keyboard.nextLong();
 
                         System.out.print("Please enter the price of the book: ");
-                        double price = kb.nextDouble();
+                        double price = keyboard.nextDouble();
 
                         System.out.println();
 
@@ -119,7 +119,7 @@ public class Assignment1 {
                         do {
                             //Prompt user for index number
                             System.out.print("Which book do you wish to update? ");
-                            int index = kb.nextInt();
+                            int index = keyboard.nextInt();
 
                             if (inventory[index] == null) { //Verify whether or not there is a book at said index in the array
                                 do {
@@ -127,7 +127,7 @@ public class Assignment1 {
                                             + "\n\t1. Re-enter another book "
                                             + "\n\t2. Go to main menu ");
 
-                                    userInput = kb.nextInt();
+                                    userInput = keyboard.nextInt();
                                 } while (userInput != 1 && userInput != 2); //Validate user input. Repeat until a valid userInput is given.
                             } else {
                                 System.out.println("Book #" + index + inventory[index]);
@@ -141,8 +141,8 @@ public class Assignment1 {
                                                 + "\n\t4. price "
                                                 + "\n\t5. Quit "
                                                 + "\nPlease enter your choice > ");
-                                        userInput = kb.nextInt();
-                                        kb.nextLine(); // Catches the /n that was not read by the nextInt()
+                                        userInput = keyboard.nextInt();
+                                        keyboard.nextLine(); // Catches the /n that was not read by the nextInt()
                                     } while (userInput < ONE || userInput > FIVE); //Validate user input
 
                                     changeBookInfo(userInput, index); //Call this method to start the process of changing the selected information
@@ -160,7 +160,7 @@ public class Assignment1 {
                     boolean authorExists = false; // Create a control variable to check if the author the user is asking for has written a book from our inventory.
                     do {
                         System.out.print("\nPlease enter the author's name: "); //Prompt user
-                        String inputName = kb.next();
+                        String inputName = keyboard.next();
                         for (int i = 0; i < inventory.length; i++) { //Iterate through the entire array
                             if (inventory[i] == null) {
                                 continue; // If said element is null, authorExists stays false.
@@ -184,7 +184,7 @@ public class Assignment1 {
 
                     do {
                         System.out.print("\nPlease enter the max price: "); //Prompt user to enter the compared price
-                        double inputPrice = kb.nextDouble();
+                        double inputPrice = keyboard.nextDouble();
 
                         for (int i = 0; i < inventory.length; i++) { //Iterate through the entire array
                             if (inventory[i] == null) {
@@ -236,7 +236,7 @@ public class Assignment1 {
                     + "\n\t4. Display all books under a certain price "
                     + "\n\t5. Quit "
                     + "\nPlease enter your choice > ");
-            chosenNumberFromMenu = kb.nextInt();
+            chosenNumberFromMenu = keyboard.nextInt();
         } while (chosenNumberFromMenu < ONE || chosenNumberFromMenu > FIVE); //Validate user input
 
     }
@@ -256,7 +256,7 @@ public class Assignment1 {
         do {
             // Prompt the user to enter his/her password
             System.out.print("Please enter your password: ");
-            inputPassword = kb.next();
+            inputPassword = keyboard.next();
             numberOfStrikes++;
         } while (!inputPassword.equals(PASSWORD) && numberOfStrikes < THREE);
 
@@ -285,22 +285,22 @@ public class Assignment1 {
         switch (choice) {
             case 1:
                 System.out.print("Change author to -> ");
-                inventory[index].setAuthor(kb.nextLine());
+                inventory[index].setAuthor(keyboard.nextLine());
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
             case 2:
                 System.out.print("Change title to -> ");
-                inventory[index].setTitle(kb.nextLine());
+                inventory[index].setTitle(keyboard.nextLine());
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
             case 3:
                 System.out.print("Change ISBN to -> ");
-                inventory[index].setIsbn(kb.nextLong());
+                inventory[index].setIsbn(keyboard.nextLong());
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
             case 4:
                 System.out.print("Change price to -> ");
-                inventory[index].setPrice(kb.nextDouble());
+                inventory[index].setPrice(keyboard.nextDouble());
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
 
