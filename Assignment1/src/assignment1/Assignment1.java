@@ -1,17 +1,22 @@
-//TODO: Do we HAVE to use methods for choice 3 and 4? 
 // Assignment 1
 // Part 2 (Driver class)
 // Written by: Viveka Anban (40063308) and Ferdousara Parvin (40062738)
-/**
- * @author Viveka Anban(40063308) and Ferdousara Parvin(40062738)
- * COMP249
- * @version 2.0
- */
-
 package assignment1;
 
 import java.util.Scanner;
 
+/**
+ * <h1>Driver class</h1>
+ * The purpose of this program is to review some concepts that we learnt previously concerning classes, loops, array of objects, static methods and static attributes. 
+ * For this assignment, we had to create a Book class which possessed 4 attributes (price, author, ISB, and title). 
+ * We then implemented this class in the driver class called Assignment1 (which simulated a book store) to keep track of the books. 
+ * We were able to add new Books to the "store", change information of a book, display all books by a specific author and display all books under a certain price <br>
+ * COMP249<br>
+ * Assignment 1 <br>
+ * Due date: Thursday, January 31st, 2018</br>
+ *
+ * @author Viveka Anban(40063308) and Ferdousara Parvin(40062738) COMP249
+ */
 public class Assignment1 {
 
     // Create scanner
@@ -21,17 +26,21 @@ public class Assignment1 {
     static final String PASSWORD = "password"; // the password cannot be changed (final)
     static final int ZERO = 0;
     static final int ONE = 1;
+    static final int TWO = 2;
     static final int THREE = 3;
+    static final int FOUR = 4;
     static final int FIVE = 5;
 
     // Variables
-    static int chosenNumberFromMenu = ZERO; // to check for valid input for number choice in menu
+    static int chosenNumberFromMenu = ZERO; // varible is used to check for validity of the input number from user (must only be the numbers fro mthe menu)
+    static int numberOfStrikes; // counter for how many failed attempts for the password
     static String inputPassword;
-    static int numberOfStrikes = ZERO; // counter for how many failed attempts for the passwrd
-    static int numberOfBooksToEnter;
-    static Book[] inventory;
-    static boolean hasPassedVerification;
+    static Book[] inventory; // array to store all the books
 
+    /**
+     * This is the main method where the Book class is being used.
+     *
+     */
     public static void main(String[] args) {
 
         // Print a welcome message
@@ -39,15 +48,18 @@ public class Assignment1 {
                 + " Welcome to Viveka and Ferdousara's program\n"
                 + "--------------------------------------------");
 
-        // Promt user to enter maximum number of books
-        System.out.print("Please enter the maximum number of books: ");
+        System.out.print("Please enter the maximum number of books: "); // Promt user to enter maximum number of books
         final int MAX_BOOKS = keyboard.nextInt(); // Retrieve data and store it in final variable MAX_BOOKS
         inventory = new Book[MAX_BOOKS]; // Set the size of array inventory
-        int numberOfSpotsRemainingInArray = MAX_BOOKS; // Initialize the integer variable to MAX_BOOKS whic means that all spots are free at the beginning of the program 
+        int numberOfSpotsRemainingInInventory = MAX_BOOKS; // Initialize to MAX_BOOKS which means that all spots are free in the inventory array at the beginning of the program 
 
-        int numberOfStrikes2 = 0; // counter for how many times option 1 has been clicked
-        boolean endOfProgram = false;
+        int numberOfStrikes2 = ZERO; // counter for how many times option 1 has been clicked
+        boolean endOfProgram = false; // true = exit the menu, quit the program
+        int numberOfBooksToEnter = ZERO;
+        boolean hasPassedVerification = false; // true = correct password
+        int startIndex = ZERO; // from which index books must be added
 
+        // While loop to navigate trough the meny and its different options
         while (!endOfProgram) {
 
             // Promt the user to enter a number between 1 and 5 inclusive
@@ -56,12 +68,11 @@ public class Assignment1 {
             // The processus of each option
             switch (chosenNumberFromMenu) {
 
-                case 1: // Enter new books
+                case ONE: // Enter new books
 
-                    numberOfStrikes = 0; // reset counter
+                    numberOfStrikes = ZERO; // reset counter every time the user enters option 1
                     hasPassedVerification = isValidPassword();
 
-                    //TODO (FERDOU): I feel like the three if statments can be combined into a if(number strikes == 3), else if(passedVerification), and an else. -> Maybe im wrong but just check in case
                     // Wrong password entered
                     if (!hasPassedVerification && numberOfStrikes2 < THREE) { // < 3 because the user has a first try before entering the switch statement
                         numberOfStrikes2++; // since we can enter this if statement if hasPassedVerification is false meaning numberOfStrikes = 3, we will display the main menu again and hence, numberOfStrikes2 will increment
@@ -69,29 +80,28 @@ public class Assignment1 {
 
                     }
 
-                    if (numberOfStrikes2 == THREE) { // 12 attemps
-                        System.out.print("\nProgram detected suspicious activities and will terminate immediately!");
-                        System.exit(0); // Close the program
+                    // After 12 attempts
+                    if (numberOfStrikes2 == THREE) {
+                        System.out.print("\nProgram detected suspicious activities and will terminate immediately!"); // Warning message
+                        System.exit(ZERO); // Close the program
                     }
 
                     // Correct password entered
                     if (hasPassedVerification) {
-                        // Promt the user for the number of books user wants to enter
-                        System.out.print("Please enter the number of books you would like to enter: ");
+                        System.out.print("Please enter the number of books you would like to enter: "); // Promt the user to enter the number of books he/she wanst to enter
                         numberOfBooksToEnter = keyboard.nextInt();
 
                         // Check if there is enough space in the array inventory
-                        while ((numberOfSpotsRemainingInArray - numberOfBooksToEnter) < ZERO) {
-                            System.out.print("You can add no more than " + numberOfSpotsRemainingInArray + " in your inventory of books. Please enter a new number: ");
+                        while ((numberOfSpotsRemainingInInventory - numberOfBooksToEnter) < ZERO) {
+                            System.out.print("You can add no more than " + numberOfSpotsRemainingInInventory + " in your inventory of books. Please enter a new number: ");
                             numberOfBooksToEnter = keyboard.nextInt();
                         }
 
-                        numberOfSpotsRemainingInArray -= numberOfBooksToEnter;
+                        numberOfSpotsRemainingInInventory -= numberOfBooksToEnter; // Update numberOfSpotsRemainingInInventory
                     }
 
                     // Add books to inventory
-                    //TODO (FERDOU): i cannot always start at 0. What if they try adding books another time and the entries 0 to 5 are occupied so you want to start adding books from where its going to end
-                    for (int i = ZERO; i < numberOfBooksToEnter; i++) {
+                    for (int i = startIndex, counter = ZERO; counter < numberOfBooksToEnter; i++, counter++) {
                         System.out.print("Please enter the title of the book: ");
                         String title = keyboard.next();
 
@@ -106,22 +116,23 @@ public class Assignment1 {
 
                         System.out.println();
 
-                        inventory[i] = new Book(title, author, isbn, price);
+                        inventory[i] = new Book(title, author, isbn, price); // Create new Book object and add it in inventory array
+
+                        startIndex++; // the next time the program will enter this for loop, books will be added starting from the empty spot after the last Book that was added
                     }
 
                     break;
 
-                case 2: // Change information of a book
+                case TWO: // Change information of a book
 
                     if (isValidPassword()) { //Only run the following, if the password is valid. Else, display the main menu.
-                        int userInput = 0;
+                        int userInput = ZERO;
 
                         do {
-                            //Prompt user for index number
-                            System.out.print("Which book do you wish to update? ");
+                            System.out.print("Which book do you wish to update? "); // Prompt user for index number
                             int index = keyboard.nextInt();
 
-                            if (inventory[index] == null) { //Verify whether or not there is a book at said index in the array
+                            if (inventory[index] == null) { // Verify whether or not there is a book at said index in the array
                                 do {
                                     System.out.println("Cannot find book. What do you want to do ?"
                                             + "\n\t1. Re-enter another book "
@@ -143,54 +154,54 @@ public class Assignment1 {
                                                 + "\nPlease enter your choice > ");
                                         userInput = keyboard.nextInt();
                                         keyboard.nextLine(); // Catches the /n that was not read by the nextInt()
-                                    } while (userInput < ONE || userInput > FIVE); //Validate user input
+                                    } while (userInput < ONE || userInput > FIVE); // Validate user input
 
-                                    changeBookInfo(userInput, index); //Call this method to start the process of changing the selected information
-                                } while (userInput != 5); //Repeat these options until user decides to quit this operation
+                                    changeBookInfo(userInput, index); // Call this method to start the process of changing the selected information
+                                } while (userInput != FIVE); // Repeat these options until user decides to quit this operation
 
                             }
 
-                        } while (userInput == 1); // Repeat this while the user still wants to try changing another book.
+                        } while (userInput == ONE); // Repeat this while the user still wants to try changing another book.
 
                     }
 
-                    break;
+                    break; // userInput == 2 (wants to go back to main menu)
 
                 case THREE: // Display all books by a specific author
                     boolean authorExists = false; // Create a control variable to check if the author the user is asking for has written a book from our inventory.
                     do {
-                        System.out.print("\nPlease enter the author's name: "); //Prompt user
+                        System.out.print("\nPlease enter the author's name: "); // Prompt user t oenter name of author he/she is looking for
                         String inputName = keyboard.next();
-                        for (int i = 0; i < inventory.length; i++) { //Iterate through the entire array
+                        for (int i = ZERO; i < inventory.length; i++) { //Iterate through the entire array
                             if (inventory[i] == null) {
                                 continue; // If said element is null, authorExists stays false.
                             }
-                            if (inventory[i].getAuthor().equals(inputName)) {
-                                System.out.println(inventory[i]); //Print said book info
+                            if (inventory[i].getAuthor().equalsIgnoreCase(inputName)) {
+                                System.out.println(inventory[i]); // Print said book info
                                 authorExists = true; //If the compared authors are equal, it means that there exists a book with that author.
                             }
                         }
 
-                        if (!authorExists) { //If the user provided an author that has not been found, inform the user and prompt them to try again.
+                        if (!authorExists) { // If the user provided an author that has not been found, inform the user and prompt them to try again.
                             System.out.println("No book written by this author has been found. Try again.");
                         }
 
-                    } while (!authorExists); //Repeat this until the user provides the program with valid author names that have written books from out inventory.
+                    } while (!authorExists); // Repeat this until the user provides the program with valid author names that have written books from out inventory.
 
                     break;
 
-                case 4: // Display all books under a certain price
-                    boolean cheaperThanExists = false; //Create a control variable that will let us know whether or not the userInput yields results.
+                case FOUR: // Display all books under a certain price
+                    boolean cheaperThanExists = false; // Create a control variable that will let us know whether or not the userInput yields results.
 
                     do {
-                        System.out.print("\nPlease enter the max price: "); //Prompt user to enter the compared price
+                        System.out.print("\nPlease enter the max price: "); // Prompt user to enter the compared price
                         double inputPrice = keyboard.nextDouble();
 
-                        for (int i = 0; i < inventory.length; i++) { //Iterate through the entire array
+                        for (int i = ZERO; i < inventory.length; i++) { // Iterate through the entire array
                             if (inventory[i] == null) {
                                 continue; // If said element is null, cheaperThanExists stays false.
                             }
-                            if (inputPrice > inventory[i].getPrice()) { //Verify if the compared book has a lower price than the user input
+                            if (inputPrice > inventory[i].getPrice()) { // Verify if the compared book has a lower price than the user input
                                 System.out.println(inventory[i]);
                                 cheaperThanExists = true;
                             }
@@ -199,9 +210,10 @@ public class Assignment1 {
                         if (!cheaperThanExists) {
                             System.out.println("No book cheaper than that price has been found. Try again.");
                         }
-                    } while (!cheaperThanExists);//Repeat this until the user provides the program with price that will yield cheaper books in the incentory.
+                    } while (!cheaperThanExists);// Repeat this until the user provides the program with price that will yield cheaper books in the incentory.
 
                     break;
+
                 case FIVE: // Quit
                     endOfProgram = true; //Enables user to end the program.
                     break;
@@ -221,9 +233,10 @@ public class Assignment1 {
      * This methods displays the main menu of this program, providing the user
      * with 5 choices
      * <p>
-     * 1. Enter new books <br>2. Change the information of a book. <br>3. Display all
-     * books by a specific author. <br>4. Display all books under a certain price.
-     * <br>5. End the program
+     * 1. Enter new books <br>2. Change the information of a book. <br>3.
+     * Display all books by a specific author. <br>4. Display all books under a
+     * certain price.
+     * <br>5. End the program</br>
      * </p>
      */
     public static void displayMenu() {
@@ -237,7 +250,7 @@ public class Assignment1 {
                     + "\n\t5. Quit "
                     + "\nPlease enter your choice > ");
             chosenNumberFromMenu = keyboard.nextInt();
-        } while (chosenNumberFromMenu < ONE || chosenNumberFromMenu > FIVE); //Validate user input
+        } while (chosenNumberFromMenu < ONE || chosenNumberFromMenu > FIVE); // Validate user input
 
     }
 
@@ -247,20 +260,19 @@ public class Assignment1 {
      * The user has 3 chances to enter the correct input. Once that limit is
      * reached without the correct password, a false value is returned.
      *
-     * @return true if the user has successfully entered the valid password ;
-     * false otherwise
+     * @return Boolean - true if the user has successfully entered the valid
+     * password; false otherwise
      */
     public static boolean isValidPassword() {
 
         numberOfStrikes = ZERO;
         do {
-            // Prompt the user to enter his/her password
-            System.out.print("Please enter your password: ");
-            inputPassword = keyboard.next();
+            System.out.print("Please enter your password: "); // Prompt the user to enter his/her password
+            inputPassword = keyboard.next(); // Retrieve user input and store it in variable inputPassword
             numberOfStrikes++;
         } while (!inputPassword.equals(PASSWORD) && numberOfStrikes < THREE);
 
-        // When the program gets out of the do-while loop, we want to know why if got out. There's two choices: correct password entered or numberOfStrikes = 3
+        // When the program gets out of the do-while loop, we want to know why it got out. There's two choices: correct password entered or numberOfStrikes = 3
         if (inputPassword.equals(PASSWORD)) {
             return true;
         } else { // numberOfStrikes = 3
@@ -271,7 +283,7 @@ public class Assignment1 {
     /**
      * This method is used to change an information from an existing book in the
      * inventory. This method is called when the user decides which information
-     * they want to change from the book they chose. Depending of their choice,
+     * they want to change from the book they chose. Depending on their choice,
      * a message will prompt the user to enter the new value of said
      * property/information of the book.
      *
@@ -283,24 +295,24 @@ public class Assignment1 {
     public static void changeBookInfo(int choice, int index) {
 
         switch (choice) {
-            case 1:
+            case ONE:
                 System.out.print("Change author to -> ");
-                inventory[index].setAuthor(keyboard.nextLine());
+                inventory[index].setAuthor(keyboard.nextLine()); // set the author of the book at the specified index to the specified value
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
-            case 2:
+            case TWO:
                 System.out.print("Change title to -> ");
-                inventory[index].setTitle(keyboard.nextLine());
+                inventory[index].setTitle(keyboard.nextLine()); // set the title of the book at the specified index to the specified value
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
-            case 3:
+            case THREE:
                 System.out.print("Change ISBN to -> ");
-                inventory[index].setIsbn(keyboard.nextLong());
+                inventory[index].setIsbn(keyboard.nextLong()); // set the ISBN of the book at the specified index to the specified value
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
-            case 4:
+            case FOUR:
                 System.out.print("Change price to -> ");
-                inventory[index].setPrice(keyboard.nextDouble());
+                inventory[index].setPrice(keyboard.nextDouble()); // set the price of the book at the specified index to the specified value
                 System.out.println("Book #" + index + "\n" + inventory[index]);
                 break;
 
