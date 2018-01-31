@@ -7,10 +7,14 @@ import java.util.Scanner;
 
 /**
  * <h1>Driver class</h1>
- * The purpose of this program is to review some concepts that we learnt previously concerning classes, loops, array of objects, static methods and static attributes. 
- * For this assignment, we had to create a Book class which possessed 4 attributes (price, author, ISB, and title). 
- * We then implemented this class in the driver class called Assignment1 (which simulated a book store) to keep track of the books. 
- * We were able to add new Books to the "store", change information of a book, display all books by a specific author and display all books under a certain price <br>
+ * The purpose of this program is to review some concepts that we learnt
+ * previously concerning classes, loops, array of objects, static methods and
+ * static attributes. For this assignment, we had to create a Book class which
+ * possessed 4 attributes (price, author, ISB, and title). We then implemented
+ * this class in the driver class called Assignment1 (which simulated a book
+ * store) to keep track of the books. We were able to add new Books to the
+ * "store", change information of a book, display all books by a specific author
+ * and display all books under a certain price <br>
  * COMP249<br>
  * Assignment 1 <br>
  * Due date: Thursday, January 31st, 2018</br>
@@ -132,14 +136,14 @@ public class Assignment1 {
                             System.out.print("Which book do you wish to update? "); // Prompt user for index number
                             int index = keyboard.nextInt();
 
-                            if (inventory[index] == null) { // Verify whether or not there is a book at said index in the array
+                            if (index >= inventory.length || inventory[index] == null) { // Verify whether or not there is a book at said index in the array
                                 do {
                                     System.out.println("Cannot find book. What do you want to do ?"
                                             + "\n\t1. Re-enter another book "
                                             + "\n\t2. Go to main menu ");
 
                                     userInput = keyboard.nextInt();
-                                } while (userInput != 1 && userInput != 2); //Validate user input. Repeat until a valid userInput is given.
+                                } while (userInput != ONE && userInput != TWO); //Validate user input. Repeat until a valid userInput is given.
                             } else {
                                 System.out.println("Book #" + index + inventory[index]);
 
@@ -170,7 +174,7 @@ public class Assignment1 {
                 case THREE: // Display all books by a specific author
                     boolean authorExists = false; // Create a control variable to check if the author the user is asking for has written a book from our inventory.
                     do {
-                        System.out.print("\nPlease enter the author's name: "); // Prompt user t oenter name of author he/she is looking for
+                        System.out.print("\nPlease enter the author's name: "); // Prompt user to enter name of author he/she is looking for
                         String inputName = keyboard.next();
                         for (int i = ZERO; i < inventory.length; i++) { //Iterate through the entire array
                             if (inventory[i] == null) {

@@ -12,7 +12,6 @@ package assignment1;
  * @author Viveka Anban(40063308) and Ferdousara Parvin(40062738) COMP249
  */
 
-//TODO: For the equals method, shoud we compare the price en tenant compte du margin d'erreur
 
 public class Book {
 
