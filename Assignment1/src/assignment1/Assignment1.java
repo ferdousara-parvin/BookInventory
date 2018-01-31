@@ -66,7 +66,7 @@ public class Assignment1 {
         // While loop to navigate trough the meny and its different options
         while (!endOfProgram) {
 
-            // Promt the user to enter a number between 1 and 5 inclusive
+            // Prompt the user to enter a number between 1 and 5 inclusive
             displayMenu();
 
             // The processus of each option
