@@ -1,6 +1,5 @@
 // Assignment 1
-// Part 2 (Driver class)
-// Written by: Viveka Anban (40063308) and Ferdousara Parvin (40062738)
+// Part 2 (Driver classs)
 package assignment1;
 
 import java.util.Scanner;
@@ -19,7 +18,6 @@ import java.util.Scanner;
  * Assignment 1 <br>
  * Due date: Thursday, January 31st, 2018</br>
  *
- * @author Viveka Anban(40063308) and Ferdousara Parvin(40062738) COMP249
  */
 public class Assignment1 {
 
@@ -36,7 +34,7 @@ public class Assignment1 {
     static final int FIVE = 5;
 
     // Variables
-    static int chosenNumberFromMenu = ZERO; // varible is used to check for validity of the input number from user (must only be the numbers fro mthe menu)
+    static int chosenNumberFromMenu = ZERO; // variable is used to check for validity of the input number from user (must only be the numbers fro mthe menu)
     static int numberOfStrikes; // counter for how many failed attempts for the password
     static String inputPassword;
     static Book[] inventory; // array to store all the books
