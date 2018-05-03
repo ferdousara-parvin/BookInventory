@@ -1,6 +1,5 @@
 // Assignment 1
 // Part 1 (Book class)
-// Written by: Viveka Anban (40063308) and Ferdousara Parvin (40062738)
 package assignment1;
 
 /**
@@ -9,7 +8,6 @@ package assignment1;
  * Assignment 1 <br>
  * Due date: Thursday, January 31st, 2018</br>
  *
- * @author Viveka Anban(40063308) and Ferdousara Parvin(40062738) COMP249
  */
 
 
